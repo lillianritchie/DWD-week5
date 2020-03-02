@@ -1,0 +1,10 @@
+mongoDB is standard data somethingorother service
+
+NeDB - file that lives in your project structure
+    imposes a structure on your project so there are no decisions re: parameters
+    great place to start if you just need a little info persistence, then if you take it further you go to mongoDB
+
+At some point when you start to use a "real" database like mongoDB its mostly free, up to a certain point.
+
+cassie uses MongoDB Atlas for p5 web editor for example
+
