@@ -1,3 +1,28 @@
+// define your todos as a class
+class Todos {
+    constructor() {
+        this.baseurl = 'api/v1/todos';
+        this.todos = [];
+        this.$todos = document.getElementById('todo-items');
+        this.$form = document.getElementById('todo-form');
+    }
+
+    //initialize
+    async init(){}
+
+    //get todos
+    async getTodos(){
+        //get data from our API
+        let data = await fetch(this.baseurl);
+        //turn it into a json
+        data = await data.json();
+        //fill todo array with that data
+        this.todos = data;
+        //render the data
+        await this.renderTodos();
+    }
+}
+
 //listen for when the DOM is loaded
 window.addEventListener("DOMContentLoaded", async() => {
     //look up the list where our to-dos goes
@@ -10,11 +35,13 @@ window.addEventListener("DOMContentLoaded", async() => {
     // })
 
     //get our result
-    let data = await fetch("/api/v1/todos");
+   // let data = await fetch("/api/v1/todos");
     //turn result into a json
     data = await data.json();
     //call todo items function
     todoItems.innerHTML = listTodos(data);
+    handleDelete();
+
 
 })
 
@@ -38,15 +65,21 @@ function listTodos(data) {
                                 <button class="todo__delete"> delete it </button>
                             </li>`);
         
-        //todoItems.append(todoItem);
+        
     }
     return myListElements.join("");
     
     //console.log(HELP);
 }
-const $deleteButtons = document.querySelectorAll(".todo__delete");
 
-$deleteButtons.forEach( item => {
+// deleteButtons =  [];
+function handleDelete() {
+const deleteButtons =  document.querySelectorAll(".todo__delete");
+console.log(deleteButtons);
+
+
+deleteButtons.forEach( item => {
+   
     item.addEventListener("click", async(evt) => {
         console.log("trying to delete");
         try{
@@ -60,3 +93,4 @@ $deleteButtons.forEach( item => {
     )
     
 });
+}
