@@ -8,9 +8,16 @@ class Todos {
     }
 
     //initialize
-    async init(){}
+    async init(){
+        //update todo
+        await this.updateTodos();
+        this.$form.addEventListener('submit', async evt => {
+            evt.preventDefault();
+            await this.createTodo();
+        });
+    }
 
-    //get todos
+    //GET todos
     async getTodos(){
         //get data from our API
         let data = await fetch(this.baseurl);
@@ -21,7 +28,59 @@ class Todos {
         //render the data
         await this.renderTodos();
     }
+
+    //POST todos
+    async createTodo() {
+        try {
+            const newData = {
+                //set the form input to the "todo" value
+                todo: this.$form.todo.value;
+                //set the status to incomplete
+                status: 'incomplete'
+            };
+            const options = {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newData);
+            };
+            //get the data from the api
+            let data = await fetch(this.baseurl, options);
+            //format it as a json
+            data = await data.json();
+            //update the todo list with the new todo
+            await this.updateTodos();
+            //print an error if something goes wrong
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // update todo (only for the status button)
+    async updateTodo(id, newData) {
+        try {
+            const options = {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newData)
+            };
+            //get your data
+            let data = await fetch(`${this.baseurl}/${id}`, options);
+            //set as json
+            data = await data.json();
+            //update the list of todos
+            await this.updateTodos();
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
+
 
 //listen for when the DOM is loaded
 window.addEventListener("DOMContentLoaded", async() => {
