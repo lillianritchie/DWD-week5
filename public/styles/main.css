@@ -5,13 +5,20 @@
 }
 html{
     font-size: 16px;
-}
-body{
-    background: #39455e;
     font-family: 'Indie Flower', 'Courier New', Courier, sans-serif;
 }
+body{
+    background-image: url("desk-clutter.jpg");
+    background-size: 120%;
+    background-color: black;
+    font-family: 'Indie Flower', 'Courier New', Courier, sans-serif;
+}
+
 p{
     font-family: 'Architects Daughter', cursive;
+}
+li{
+    list-style-type: none;
 }
 .debug{
     border: 1px solid black;
@@ -19,10 +26,38 @@ p{
 .notebook{
     background: #fffbf0;
     margin: 2rem;
-    padding: 5rem 3rem 3rem 3rem;
     box-shadow: 9px 9px 8px #151b26;
 }
-.notebook__top{
-    border-bottom: 1px solid red;
+.notebook__header{
+    border-bottom: 2px solid blue;
+    padding: 4rem 1rem 2rem 1rem;
 
+}
+.notebook__body{
+    border-bottom: 2px solid blue;
+    padding: 1rem 1rem 2rem 1rem;
+}
+
+.notebook__footer{
+    height: 4rem;
+}
+
+.todo__line{
+    border-bottom: 1px solid blue;
+    padding: 0.25rem;
+}
+.todo__status{
+    border: 2px solid gray;
+}
+
+.todo__delete{
+    background: purple;
+    color: white;
+    font-family: 'Indie Flower', 'Courier New', Courier, sans-serif;
+    padding: 0.05rem 0.25rem 0.05rem 0.25rem;
+    font-size: 1rem;
+}
+.todo__add{
+    background: pink;
+    padding: 0.05rem 0.25rem0.05rem 0.25rem;
 }

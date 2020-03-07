@@ -34,7 +34,7 @@ class Todos {
         try {
             const newData = {
                 //set the form input to the "todo" value
-                todo: this.$form.todo.value;
+                todo: this.$form.todo.value,
                 //set the status to incomplete
                 status: 'incomplete'
             };
@@ -44,7 +44,7 @@ class Todos {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(newData);
+                body: JSON.stringify(newData)
             };
             //get the data from the api
             let data = await fetch(this.baseurl, options);
@@ -58,7 +58,7 @@ class Todos {
         }
     }
 
-    // update todo (only for the status button)
+    // PUT: update todo (only for the status button)
     async updateTodo(id, newData) {
         try {
             const options = {
@@ -79,77 +79,131 @@ class Todos {
             console.error(error);
         }
     }
-}
 
+    // DELETE: delete a todo
+    async deleteTodo(id) {
+        //try to DELETE from the api
+        try {
+            const options = {
+                method: 'DELETE',
+            };
+            let data = await fetch(`${this.baseurl}/${id}`, options);
+            data = await data.json();
+            //update the page
+            this.updateTodos();
+            //print an error message if something goes wrong
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    //update your todo list after changes
+    async updateTodos() {
+        //get the todos from the API
+        await this.getTodos();
+        //and render them in the DOM
+        this.renderTodos();
+    }
+
+    //render the todos in the DOM
+    renderTodos() {
+        //reset HTML
+        this.$todos.innerHTML = '';
+        this.todos.forEach( item => {
+            let status;
+            if(item.status == "not started"){
+                            status = "a";
+                        } else if( item.status == "in progress"){
+                            status = "b";
+                        } else if (item.status == "complete"){
+                            status = "c";
+                        } else {
+                            status = "d";
+                        }
+            this.$todos.innerHTML += `
+                <li data-todo="${item.todo}" class="todo__line">
+                    <span class="status__${status} todo__status"> (${status}) </span>
+                    <span>${item.todo}</span>
+                    <button class="todo__delete"> delete it </button>
+                </li>
+            `;
+        });
+    }
+}
+window.addEventListener('DOMContentLoaded', async() => {
+    const todos = new Todos();
+    await todos.init();
+});
 
 //listen for when the DOM is loaded
-window.addEventListener("DOMContentLoaded", async() => {
-    //look up the list where our to-dos goes
-    const todoItems = document.getElementById("todo-items");
-    // fetch the todo items from our database
-    // fetch("/api/v1/todos").then(res => res.json()).then((data) => {
-    //     //add each todo to the list
-    //     console.log(data)
-    //     todoItems.innerHTML = listTodos(data);
-    // })
+// window.addEventListener("DOMContentLoaded", async() => {
+//     //look up the list where our to-dos goes
+//     const todoItems = document.getElementById("todo-items");
+//     // fetch the todo items from our database
+//     // fetch("/api/v1/todos").then(res => res.json()).then((data) => {
+//     //     //add each todo to the list
+//     //     console.log(data)
+//     //     todoItems.innerHTML = listTodos(data);
+//     // })
 
-    //get our result
-   // let data = await fetch("/api/v1/todos");
-    //turn result into a json
-    data = await data.json();
-    //call todo items function
-    todoItems.innerHTML = listTodos(data);
-    handleDelete();
+//     //get our result
+//    // let data = await fetch("/api/v1/todos");
+//     //turn result into a json
+//     data = await data.json();
+//     //call todo items function
+//     todoItems.innerHTML = listTodos(data);
+//     handleDelete();
 
+    
 
-})
+// })
 
-function listTodos(data) {
-    const myListElements =[]
-    for(let i =0; i <data.length; i++ ){
-        let item = data[i];
-        let status;
-        if(item.status == "not started"){
-            status = "a";
-        } else if( item.status == "in progress"){
-            status = "b";
-        } else if (item.status == "complete"){
-            status = "c";
-        } else {
-            status = "d";
-        }
-        myListElements.push(`<li data-todo="${item.todo}">
-                                <span class="status__${status}"> (${status}) </span>
-                                <span>${item.todo}</span>
-                                <button class="todo__delete"> delete it </button>
-                            </li>`);
+// function listTodos(data) {
+//     const myListElements =[]
+//     for(let i =0; i <data.length; i++ ){
+//         let item = data[i];
+//         let status;
+//         if(item.status == "not started"){
+//             status = "a";
+//         } else if( item.status == "in progress"){
+//             status = "b";
+//         } else if (item.status == "complete"){
+//             status = "c";
+//         } else {
+//             status = "d";
+//         }
+//         myListElements.push(`<li data-todo="${item.todo}">
+//                                 <span class="status__${status}"> (${status}) </span>
+//                                 <span>${item.todo}</span>
+//                                 <button class="todo__delete"> delete it </button>
+//                             </li>`);
         
         
-    }
-    return myListElements.join("");
+//     }
+//     return myListElements.join("");
     
     //console.log(HELP);
-}
-
-// deleteButtons =  [];
-function handleDelete() {
-const deleteButtons =  document.querySelectorAll(".todo__delete");
-console.log(deleteButtons);
 
 
-deleteButtons.forEach( item => {
+// // deleteButtons =  [];
+// function handleDelete() {
+// const deleteButtons =  document.querySelectorAll(".todo__delete");
+// console.log(deleteButtons);
+
+
+// deleteButtons.forEach( item => {
    
-    item.addEventListener("click", async(evt) => {
-        console.log("trying to delete");
-        try{
-            const id = evt.target._id;
-            await fetch (`/api/v1/todos/${id}`, {method: "DELETE"});
-            console.log("delete successful");
-        } catch(error){
-            console.log("OH NO! Somethign is wrong");
-        }
-    }
-    )
+//     item.addEventListener("click", async(evt) => {
+//         console.log("trying to delete");
+//         try{
+//             const id = evt.target._id;
+//             await fetch (`/api/v1/todos/${id}`, {method: "DELETE"});
+//             console.log("delete successful");
+//         } catch(error){
+//             console.log("OH NO! Somethign is wrong");
+//         }
+//     }
+//     )
     
-});
-}
+// });
+// }
