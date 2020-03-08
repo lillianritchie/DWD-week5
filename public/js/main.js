@@ -120,12 +120,12 @@ class Todos {
                 status = " ";
             } else if (item.status == "complete") {
                 status = "X";
-            }  else {
+            } else {
                 status = "?";
             }
             this.$todos.innerHTML += `
-                <li data-todo="${item.todo}" class="todo__line"  id="${item._id}" status="${item.status}">
-                    <button class="todo__status" status=${item.status}> ${status} </button>
+                <li name="${item.todo}" class="todo__line"  id="${item._id}" status="${item.status}">
+                    <button class="todo__status" name=${item.status}> ${status} </button>
                     <span>${item.todo}</span>
                     <button class="todo__delete"> delete it </button>
                 </li>
@@ -146,17 +146,27 @@ class Todos {
         if ($clickedButton.classList.contains('todo__delete')) {
             console.log("delete", $listItem, $listItem.id);
             await this.deleteTodo($listItem.id);
-            
+
         } else if ($clickedButton.classList.contains('todo__status')) {
             //work out change formula here
-            console.log($listItem);
-            //const updatedData = {
-            //    todo: $listItem.todo,
-            //    status: "complete"
-           // };
-           // console.log(updatedData);
-           // await this.updateTodo($listItem._id, updatedData);
-           // console.log('edit', $listItem._id);
+            //console.log($listItem.attributes.name.value);
+            let updatedData
+            if ($listItem.attributes.status.value == "incomplete") {
+                // console.log("incomplete")
+                updatedData = {
+                    todo: $listItem.attributes.name.value,
+                    status: "complete"
+                };
+            } else {
+                updatedData = {
+                    todo: $listItem.attributes.name.value,
+                    status: "incomplete"
+                };
+            }
+
+            console.log(updatedData);
+             await this.updateTodo($listItem.id, updatedData);
+             console.log('edit', $listItem.id);
         }
 
     }
