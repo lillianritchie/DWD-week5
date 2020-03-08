@@ -55,6 +55,7 @@ class Todos {
             data = await data.json();
             //update the todo list with the new todo
             await this.updateTodos();
+
             //print an error if something goes wrong
         } catch (error) {
             console.error(error);
@@ -123,8 +124,8 @@ class Todos {
                 status = "?";
             }
             this.$todos.innerHTML += `
-                <li data-todo="${item.todo}" class="todo__line"  id=${item._id}>
-                    <button class="status__${status} todo__status"> ${status} </button>
+                <li data-todo="${item.todo}" class="todo__line"  id="${item._id}" status="${item.status}">
+                    <button class="todo__status" status=${item.status}> ${status} </button>
                     <span>${item.todo}</span>
                     <button class="todo__delete"> delete it </button>
                 </li>
@@ -149,13 +150,13 @@ class Todos {
         } else if ($clickedButton.classList.contains('todo__status')) {
             //work out change formula here
             console.log($listItem);
-            const updatedData = {
-                todo: $listItem.todo,
-                status: "complete"
-            };
-            console.log(updatedData);
-            await this.updateTodo($listItem._id, updatedData);
-            console.log('edit', $listItem._id);
+            //const updatedData = {
+            //    todo: $listItem.todo,
+            //    status: "complete"
+           // };
+           // console.log(updatedData);
+           // await this.updateTodo($listItem._id, updatedData);
+           // console.log('edit', $listItem._id);
         }
 
     }
