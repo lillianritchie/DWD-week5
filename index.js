@@ -90,7 +90,7 @@ app.delete("/api/v1/todos/:id", async (req, res) => {
     try {
         const id = req.params.id;
         //console.log(id);
-        const deletedData = await db.findOneAndDelete(id);
+        const deletedData = await db.findByIdAndDelete(id);
         res.json({message:"delete!", deletedDocument: deletedData});
     } catch (error) {
         res.json(error);
