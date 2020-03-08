@@ -5,10 +5,11 @@ class Todos {
         this.todos = [];
         this.$todos = document.getElementById('todo-items');
         this.$form = document.getElementById('todo-form');
+        this.$deleteButtons = document.querySelectorAll('.todo__delete')
     }
 
     //initialize
-    async init(){
+    async init() {
         //update todo
         await this.updateTodos();
         this.$form.addEventListener('submit', async evt => {
@@ -18,7 +19,7 @@ class Todos {
     }
 
     //GET todos
-    async getTodos(){
+    async getTodos() {
         //get data from our API
         let data = await fetch(this.baseurl);
         //turn it into a json
@@ -109,28 +110,53 @@ class Todos {
     renderTodos() {
         //reset HTML
         this.$todos.innerHTML = '';
-        this.todos.forEach( item => {
+        this.todos.forEach(item => {
             let status;
-            if(item.status == "not started"){
-                            status = "a";
-                        } else if( item.status == "in progress"){
-                            status = "b";
-                        } else if (item.status == "complete"){
-                            status = "c";
-                        } else {
-                            status = "d";
-                        }
+            if (item.status == "not started") {
+                status = "a";
+            } else if (item.status == "in progress") {
+                status = "b";
+            } else if (item.status == "complete") {
+                status = "c";
+            } else {
+                status = "d";
+            }
             this.$todos.innerHTML += `
                 <li data-todo="${item.todo}" class="todo__line">
-                    <span class="status__${status} todo__status"> (${status}) </span>
+                    <button class="status__${status} todo__status"> ${status} </button>
                     <span>${item.todo}</span>
                     <button class="todo__delete"> delete it </button>
                 </li>
             `;
         });
     }
+
+    deleteButtons = [];
+
+    function handleDelete() {
+        const deleteButtons = document.querySelectorAll(".todo__delete");
+        console.log(deleteButtons);
+
+
+        deleteButtons.forEach(item => {
+
+            item.addEventListener("click", async (evt) => {
+                console.log("trying to delete");
+                try {
+                    const id = evt.target._id;
+                    await fetch(`/api/v1/todos/${id}`, {
+                        method: "DELETE"
+                    });
+                    console.log("delete successful");
+                } catch (error) {
+                    console.log("OH NO! Somethign is wrong");
+                }
+            })
+
+        });
+    }
 }
-window.addEventListener('DOMContentLoaded', async() => {
+window.addEventListener('DOMContentLoaded', async () => {
     const todos = new Todos();
     await todos.init();
 });
@@ -154,7 +180,7 @@ window.addEventListener('DOMContentLoaded', async() => {
 //     todoItems.innerHTML = listTodos(data);
 //     handleDelete();
 
-    
+
 
 // })
 
@@ -177,22 +203,22 @@ window.addEventListener('DOMContentLoaded', async() => {
 //                                 <span>${item.todo}</span>
 //                                 <button class="todo__delete"> delete it </button>
 //                             </li>`);
-        
-        
+
+
 //     }
 //     return myListElements.join("");
-    
-    //console.log(HELP);
+
+//console.log(HELP);
 
 
-// // deleteButtons =  [];
+// deleteButtons =  [];
 // function handleDelete() {
 // const deleteButtons =  document.querySelectorAll(".todo__delete");
 // console.log(deleteButtons);
 
 
 // deleteButtons.forEach( item => {
-   
+
 //     item.addEventListener("click", async(evt) => {
 //         console.log("trying to delete");
 //         try{
@@ -204,6 +230,6 @@ window.addEventListener('DOMContentLoaded', async() => {
 //         }
 //     }
 //     )
-    
+
 // });
 // }
