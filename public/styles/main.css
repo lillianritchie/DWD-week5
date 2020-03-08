@@ -28,6 +28,7 @@ li{
 .notebook__content{
     background: #f4ffe3;
     box-shadow: 9px 9px 8px #151b26;
+    padding: 0rem 2rem 0rem 2rem;
     
 }
 .notebook__margin{
@@ -49,6 +50,8 @@ li{
 
 .notebook__footer{
     height: 4rem;
+    padding: 1rem 0rem 3rem 1rem;
+   
     
 }
 
@@ -56,17 +59,32 @@ li{
     border-bottom: 1px solid  #298dff;
     padding: 0.25rem;
 }
-.todo__status{
-    border: 2px solid gray;
+.todo__status  {
+    border: 2px solid#298dff;
+    background: #298dff;
+    color: white;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 1rem;
+    
 }
 
 .todo__delete{
-    background: gray;
-    color: white;
+    background: none;
+    color:black;
+    border: 2px dotted black;
     padding: 0.05rem 0.25rem 0.05rem 0.25rem;
     font-size: 1rem;
 }
+.todo__delete:hover{
+    border: 2px solid black;
+}
 .todo__add{
-    background: pink;
-    padding: 0.05rem 0.25rem0.05rem 0.25rem;
+    
+    padding: 0.05rem 0.25rem 0.05rem 0.25rem;
+    font-size: 1rem;
+}
+
+input{
+    width: 400px;
 }

@@ -34,6 +34,7 @@ class Todos {
     //POST todos
     async createTodo() {
         try {
+            console.log(this.$form.todo.value);
             const newData = {
                 //set the form input to the "todo" value
                 todo: this.$form.todo.value,
@@ -148,7 +149,14 @@ class Todos {
             console.log("delete", $listItem, $listItem._id);
         } else if ($clickedButton.classList.contains('todo__status')) {
             //work out change formula here
-            console.log("changes coming soon");
+            console.log($listItem);
+            const updatedData = {
+                todo: $listItem.todo,
+                status: "complete"
+            };
+            console.log(updatedData);
+            await this.updateTodo($listItem._id, updatedData);
+            console.log('edit', $listItem._id);
         }
 
     }
