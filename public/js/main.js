@@ -143,8 +143,9 @@ class Todos {
         const $listItem = evt.currentTarget;
 
         if ($clickedButton.classList.contains('todo__delete')) {
-            await this.deleteTodo($listItem.id);
             console.log("delete", $listItem, $listItem.id);
+            await this.deleteTodo($listItem.id);
+            
         } else if ($clickedButton.classList.contains('todo__status')) {
             //work out change formula here
             console.log($listItem);

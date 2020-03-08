@@ -87,7 +87,7 @@ app.put("/api/v1/todos/:id", async (req, res) => {
 app.delete("/api/v1/todos/:id", async (req, res) => {
     //all async functions need to have a try and a catch
     try {
-        const id = req.params.id;
+        const id = req.params._id;
         const deletedData = await db.findOneAndDelete(id);
         res.json({message:"delete!", deletedDocument: deletedData});
     } catch (error) {
