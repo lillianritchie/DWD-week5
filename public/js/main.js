@@ -5,7 +5,7 @@ class Todos {
         this.todos = [];
         this.$todos = document.getElementById('todo-items');
         this.$form = document.getElementById('todo-form');
-        this.$deleteButtons = document.querySelectorAll('.todo__delete')
+        //this.$deleteButtons = document.querySelectorAll('.todo__delete');
     }
 
     //initialize
@@ -28,6 +28,7 @@ class Todos {
         this.todos = data;
         //render the data
         await this.renderTodos();
+        // console.log("delete buttons: "+ this.$deleteButtons);
     }
 
     //POST todos
@@ -110,6 +111,7 @@ class Todos {
     renderTodos() {
         //reset HTML
         this.$todos.innerHTML = '';
+        //update HTML for each todo
         this.todos.forEach(item => {
             let status;
             if (item.status == "not started") {
@@ -129,31 +131,26 @@ class Todos {
                 </li>
             `;
         });
+        //add event listeners to delete
+        document.querySelectorAll('.todo__line').forEach(item => {
+            item.addEventListener('click', this.handleEditOrDelete.bind(this));
+        });
     }
 
-    deleteButtons = [];
 
-    function handleDelete() {
-        const deleteButtons = document.querySelectorAll(".todo__delete");
-        console.log(deleteButtons);
+    async handleEditOrDelete(evt) {
 
+        const $clickedButton = evt.target;
+        const $listItem = evt.currentTarget;
 
-        deleteButtons.forEach(item => {
+        if ($clickedButton.classList.contains('todo__delete')) {
+            await this.deleteTodo($listItem._id);
+            console.log("delete", $listItem, $listItem._id);
+        } else if ($clickedButton.classList.contains('todo__status')) {
+            //work out change formula here
+            console.log("changes coming soon");
+        }
 
-            item.addEventListener("click", async (evt) => {
-                console.log("trying to delete");
-                try {
-                    const id = evt.target._id;
-                    await fetch(`/api/v1/todos/${id}`, {
-                        method: "DELETE"
-                    });
-                    console.log("delete successful");
-                } catch (error) {
-                    console.log("OH NO! Somethign is wrong");
-                }
-            })
-
-        });
     }
 }
 window.addEventListener('DOMContentLoaded', async () => {
