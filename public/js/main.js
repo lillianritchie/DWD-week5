@@ -115,17 +115,15 @@ class Todos {
         //update HTML for each todo
         this.todos.forEach(item => {
             let status;
-            if (item.status == "not started") {
-                status = "a";
-            } else if (item.status == "in progress") {
-                status = "b";
+            if (item.status == "incomplete") {
+                status = " ";
             } else if (item.status == "complete") {
-                status = "c";
-            } else {
-                status = "d";
+                status = "X";
+            }  else {
+                status = "?";
             }
             this.$todos.innerHTML += `
-                <li data-todo="${item.todo}" class="todo__line">
+                <li data-todo="${item.todo}" class="todo__line"  id=${item._id}>
                     <button class="status__${status} todo__status"> ${status} </button>
                     <span>${item.todo}</span>
                     <button class="todo__delete"> delete it </button>
@@ -145,8 +143,8 @@ class Todos {
         const $listItem = evt.currentTarget;
 
         if ($clickedButton.classList.contains('todo__delete')) {
-            await this.deleteTodo($listItem._id);
-            console.log("delete", $listItem, $listItem._id);
+            await this.deleteTodo($listItem.id);
+            console.log("delete", $listItem, $listItem.id);
         } else if ($clickedButton.classList.contains('todo__status')) {
             //work out change formula here
             console.log($listItem);
