@@ -9,9 +9,8 @@ html{
     
 }
 body{
-    background-image: url("desk-clutter.jpg");
-    background-size: 120%;
-    background-color: black;
+    background-image: linear-gradient(#103969, #04557d);
+    background-size: 100% 100%;
 }
 h1{
     font-size: 3rem;
@@ -60,24 +59,34 @@ li{
     padding: 0.25rem;
 }
 .todo__status  {
-    border: 2px solid#298dff;
-    background: #298dff;
+    border: 2px solid #144f91;
+    background-image: linear-gradient(#298dff,#2276d6);
     color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5rem;
     height: 2rem;
     width: 2rem;
     border-radius: 1rem;
-    
+    padding: 0;
+}
+.todo__status:hover{
+    border: 2px solid #298dff;
+}
+
+.todo__status:active{
+    background: white;
 }
 
 .todo__delete{
     background: none;
     color:black;
-    border: 2px dotted black;
+    border: 2px dotted #144f91;
     padding: 0.05rem 0.25rem 0.05rem 0.25rem;
     font-size: 1rem;
 }
 .todo__delete:hover{
-    border: 2px solid black;
+    border: 2px solid #144f91;
 }
 .todo__add{
     
@@ -86,5 +95,5 @@ li{
 }
 
 input{
-    width: 400px;
+    width: 45%;
 }

@@ -55,6 +55,8 @@ class Todos {
             data = await data.json();
             //update the todo list with the new todo
             await this.updateTodos();
+            this.$form.todo.value = "";
+            
 
             //print an error if something goes wrong
         } catch (error) {
