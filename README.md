@@ -1,5 +1,5 @@
 <!-- Every README should start with an H1 -->
-# The Good Project Readme Project
+# Lillian's To Do List: DWD Week 5
 <!-- A one sentence description of the project or assignment -->
 This is my fifth week's homework assignment for Dynamic Web Dev. 
 
